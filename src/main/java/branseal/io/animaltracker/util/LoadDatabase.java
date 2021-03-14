@@ -1,5 +1,7 @@
-package branseal.io.animaltracker;
+package branseal.io.animaltracker.util;
 
+import branseal.io.animaltracker.model.Animal;
+import branseal.io.animaltracker.repository.AnimalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -7,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 @Configuration
 class LoadDatabase {

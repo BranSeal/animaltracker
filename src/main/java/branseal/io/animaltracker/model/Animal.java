@@ -1,15 +1,13 @@
-package branseal.io.animaltracker;
+package branseal.io.animaltracker.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
-class Animal {
+public class Animal {
      private @Id @GeneratedValue Long id;
      private String name;
      private LocalDate dob;

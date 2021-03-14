@@ -1,5 +1,8 @@
-package branseal.io.animaltracker;
+package branseal.io.animaltracker.controller;
 
+import branseal.io.animaltracker.model.Animal;
+import branseal.io.animaltracker.util.AnimalNotFoundException;
+import branseal.io.animaltracker.repository.AnimalRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;

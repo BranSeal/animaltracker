@@ -1,4 +1,4 @@
-package branseal.io.animaltracker;
+package branseal.io.animaltracker.util;
 
 public class AnimalNotFoundException extends RuntimeException {
     public AnimalNotFoundException(Long id) {
