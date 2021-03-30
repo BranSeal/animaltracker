@@ -1,25 +1,50 @@
 package branseal.io.animaltracker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import branseal.io.animaltracker.util.IllegalAnimalLogException;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "Animal")
 public class Animal {
-     private @Id @GeneratedValue Long id;
-     private String name;
-     private LocalDate dob;
+    private @Id @GeneratedValue Long id;
+    private String name;
+    private String dob;
 
-     public Animal () {
+    private @OneToMany List<Log> feedingLogs;
+    private @OneToMany List<Log> weightLogs;
+    private @OneToMany List<Log> medicationLogs;
 
-     }
+    private static final int expectedFeedingLogSize = 3;
+    private static final int expectedMedicationLogSize = 2;
 
-     public Animal (String name, LocalDate dob) {
-         this.name = name;
-         this.dob = dob;
-     }
+    public Animal() {
+
+    }
+
+    public Animal( Long id,
+            String name,
+            String dob,
+            List<Log> feedingLogs,
+            List<Log> weightLogs,
+            List<Log> medicationLogs) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.feedingLogs = feedingLogs;
+        this.weightLogs = weightLogs;
+        this.medicationLogs = medicationLogs;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -29,13 +54,38 @@ public class Animal {
         this.name = name;
     }
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
+
+    public List<Log> getFeedingLogs() {
+        return feedingLogs;
+    }
+
+    public void setFeedingLogs(List<Log> feedingLogs) {
+        this.feedingLogs = feedingLogs;
+    }
+
+    public List<Log> getWeightLogs() {
+        return weightLogs;
+    }
+
+    public void setWeightLogs(List<Log> weightLogs) {
+        this.weightLogs = weightLogs;
+    }
+
+    public List<Log> getMedicationLogs() {
+        return medicationLogs;
+    }
+
+    public void setMedicationLogs(List<Log> medicationLogs) {
+        this.medicationLogs = medicationLogs;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -54,8 +104,8 @@ public class Animal {
     public String toString() {
         return "Animal{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + name + "'" +
                 ", dob=" + dob +
-                '}';
+                "}";
     }
 }
