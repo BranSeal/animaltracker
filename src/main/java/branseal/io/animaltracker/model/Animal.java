@@ -93,4 +93,16 @@ public class Animal {
     public int hashCode() {
         return Objects.hash(id, name, dob, feedingLogs, weightLogs, medicationLogs);
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dob='" + dob + '\'' +
+                ", feedingLogs=" + feedingLogs +
+                ", weightLogs=" + weightLogs +
+                ", medicationLogs=" + medicationLogs +
+                '}';
+    }
 }
