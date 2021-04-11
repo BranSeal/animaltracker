@@ -1,27 +1,29 @@
 package branseal.io.animaltracker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.Instant;
 import java.util.Objects;
 
-@Entity(name = "Log")
+@Entity
+@Table(name = "log")
+@EntityListeners(AuditingEntityListener.class)
 public class Log {
     private @Id @GeneratedValue Long id;
-    // ZonedDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss z"))
-    private String timestamp;
+    private @CreatedDate Instant createdDate;
     private String type;
     private String value;
-    private @ManyToOne Animal animal;
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "animal_id", nullable = false)
+    private Animal animal;
 
     public Log() {}
 
-    public Log(String timestamp, String type, String value, Animal animal) {
-        this.timestamp = timestamp;
+    public Log(String type, String value) {
         this.type = type;
         this.value = value;
-        this.animal = animal;
     }
 
     public Long getId() {
@@ -32,12 +34,12 @@ public class Log {
         this.id = id;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getType() {
@@ -70,7 +72,7 @@ public class Log {
         if (o == null || getClass() != o.getClass()) return false;
         Log log = (Log) o;
         return Objects.equals(id, log.id)
-                && Objects.equals(timestamp, log.timestamp)
+                && Objects.equals(createdDate, log.createdDate)
                 && Objects.equals(type, log.type)
                 && Objects.equals(value, log.value)
                 && Objects.equals(animal, log.animal);
@@ -78,17 +80,16 @@ public class Log {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timestamp, type, value, animal);
+        return Objects.hash(id, createdDate, type, value, animal);
     }
 
     @Override
     public String toString() {
         return "Log{" +
                 "id=" + id +
-                ", timestamp='" + timestamp + '\'' +
+                ", createdDate='" + createdDate + '\'' +
                 ", type='" + type + '\'' +
                 ", value='" + value + '\'' +
-                ", animal=" + animal +
                 '}';
     }
 }

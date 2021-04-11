@@ -1,31 +1,36 @@
 package branseal.io.animaltracker.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "Animal")
+@Entity
+@Table(name = "animal")
 public class Animal {
     private @Id @GeneratedValue Long id;
+
     private String name;
+
     private String dob;
 
-    private @OneToMany List<Log> feedingLogs;
-    private @OneToMany List<Log> weightLogs;
-    private @OneToMany List<Log> medicationLogs;
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinTable
+    private List<Log> feedingLogs;
+
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinTable
+    private List<Log> weightLogs;
+
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinTable
+    private List<Log> medicationLogs;
 
     public Animal() {}
 
-    public Animal(String name,
-            String dob,
-            List<Log> feedingLogs,
-            List<Log> weightLogs,
-            List<Log> medicationLogs) {
+    public Animal(String name, String dob) {
         this.name = name;
         this.dob = dob;
-        this.feedingLogs = feedingLogs;
-        this.weightLogs = weightLogs;
-        this.medicationLogs = medicationLogs;
     }
 
     public Long getId() {
@@ -104,5 +109,29 @@ public class Animal {
                 ", weightLogs=" + weightLogs +
                 ", medicationLogs=" + medicationLogs +
                 '}';
+    }
+
+    public void logFood(Log log) {
+        if (feedingLogs == null) {
+            feedingLogs = new ArrayList<>();
+        }
+        feedingLogs.add(log);
+        log.setAnimal(this);
+    }
+
+    public void logWeight(Log log) {
+        if (weightLogs == null) {
+            weightLogs = new ArrayList<>();
+        }
+        weightLogs.add(log);
+        log.setAnimal(this);
+    }
+
+    public void logMedication(Log log) {
+        if (medicationLogs == null) {
+            medicationLogs = new ArrayList<>();
+        }
+        medicationLogs.add(log);
+        log.setAnimal(this);
     }
 }
