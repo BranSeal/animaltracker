@@ -1,5 +1,7 @@
 package branseal.io.animaltracker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "animal")
 public class Animal {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="animal_seq")
+    @SequenceGenerator(name = "animal_seq", sequenceName = "animal_seq_table")
+    private Long id;
 
     private String name;
 
@@ -16,14 +21,17 @@ public class Animal {
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinTable
+    @JsonManagedReference
     private List<Log> feedingLogs;
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinTable
+    @JsonManagedReference
     private List<Log> weightLogs;
 
     @OneToMany(cascade= CascadeType.ALL)
     @JoinTable
+    @JsonManagedReference
     private List<Log> medicationLogs;
 
     public Animal() {}

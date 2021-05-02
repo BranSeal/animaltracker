@@ -19,18 +19,18 @@ class LoadDatabase {
         return args -> {
             Animal a1 = new Animal("Honey", "03/20/2016");
             a1.logFood(new Log("Wellness Core Indoor Dry Food", "45 grams"));
-            a1.logWeight(new Log("", "9.8 lbs"));
+            a1.logWeight(new Log("lb", "9.8"));
             log.info("Loading " + animalRepository.save(a1));
 
             Animal a2 = new Animal("Peppa", "01/02/2019");
             a2.logFood(new Log("Blue Buffalo Wet Food", "1/2 can"));
             a2.logFood(new Log("Whole Hearted Chicken", "1/2 can"));
-            a2.logWeight(new Log("", "8.5 lbs"));
+            a2.logWeight(new Log("lb", "8.5"));
             log.info("Loading " + animalRepository.save(a2));
 
             Animal a3 = new Animal("Boo", "03/20/2019");
             a3.logFood(new Log("Hills Science", "50 grams"));
-            a3.logWeight(new Log("", "10 lbs"));
+            a3.logWeight(new Log("lb", "10"));
             log.info("Loading " + animalRepository.save(a3));
         };
     }

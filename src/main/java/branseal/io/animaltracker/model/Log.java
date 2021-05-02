@@ -1,5 +1,7 @@
 package branseal.io.animaltracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -11,12 +13,20 @@ import java.util.Objects;
 @Table(name = "log")
 @EntityListeners(AuditingEntityListener.class)
 public class Log {
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="log_seq")
+    @SequenceGenerator(name = "log_seq", sequenceName = "log_seq_table")
+    private Long id;
+
     private @CreatedDate Instant createdDate;
+
     private String type;
+
     private String value;
+
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "animal_id", nullable = false)
+    @JsonBackReference
     private Animal animal;
 
     public Log() {}
@@ -74,8 +84,7 @@ public class Log {
         return Objects.equals(id, log.id)
                 && Objects.equals(createdDate, log.createdDate)
                 && Objects.equals(type, log.type)
-                && Objects.equals(value, log.value)
-                && Objects.equals(animal, log.animal);
+                && Objects.equals(value, log.value);
     }
 
     @Override
